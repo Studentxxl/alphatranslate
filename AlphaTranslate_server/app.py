@@ -3,13 +3,20 @@ from fastapi.responses import JSONResponse
 from mtranslate import translate
 from pydantic import BaseModel
 from langdetect import detect
+import CONFIG
 
 
 app = FastAPI()
 
+
 class Query(BaseModel):
     name: str
     age: int
+
+
+# ***********************
+# APP
+# ***********************
 
 @app.get("/")
 def read_root():
@@ -32,9 +39,12 @@ def ru_eng_translate2(query: list[Query]):
     return {"message": query}
 
 
+# ***********************
+# START
+# ***********************
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8090)
+    uvicorn.run(app, host=CONFIG.host, port=CONFIG.port)
 
 

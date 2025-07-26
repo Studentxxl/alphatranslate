@@ -1,63 +1,50 @@
 import telebot
 import func
-from datetime import datetime
 from time import sleep
-from os import path
 import requests
 import SECRET
+import CONFIG
 
 
 bot = telebot.TeleBot(SECRET.TOKEN)
 
 
-bot_admin_list = [6753632098]
-admin_id = 6753632098
-developer_id = 6591039077
-
-stop_symbols = ['=', '+', '/', '*', '{', '}', '[', ']', '(', ')']
-
-def date_time_now():
-    #
-    return datetime.now().strftime("%Y-%m-%d--%H:%M")
-
-
-def log(file_path, text):
-    filename = datetime.now().strftime("%Y-%m-%d" + ".txt")
-    if path.exists(file_path + filename) == False:
-        open(file=file_path + filename, mode='a', encoding='utf-8').close()
-
-    with open(file=file_path + filename, mode='a', encoding='utf-8') as file:
-        file.write(text)
-
-
-# * Пути
-patch_to_log = "./log/"
-
+# ****************************
+# APP
+# ****************************
 
 @bot.message_handler(content_types=['text'])
 def text_message(message):
-    if func.check_symbols(obj=message.text, forbidden_symbols=stop_symbols):
-        res = requests.get(f'http://91.205.164.229:8090/translate/?user_query={message.text}')
-        date = date_time_now()
-        info_message = (f'***\n'
-                        f'{date} url: {res.url}\n'
-                        f'response: {res.text}\n\n')
-        log(file_path=patch_to_log, text=info_message)
-        print(info_message)
-        bot.send_message(message.chat.id, res.text)
-    else:
-        info_message = ('***\n'
-                        'В тексте не должно быть символов:\n'
-                        '=+/*{}[]()')
-        bot.send_message(chat_id=message.chat.id, text=info_message)
+    date = func.date_time_now()
+    try:
+        if func.check_symbols(obj=message.text, forbidden_symbols=CONFIG.stop_symbols):
+            res = requests.get(f'{CONFIG.server_url}/translate/?user_query={message.text}')
+            info_message = (f'***\n'
+                            f'{date} url: {res.url}\n'
+                            f'response: {res.text}\n\n')
+            func.log(file_path=CONFIG.patch_to_log, text=info_message)
+            print(info_message)
+            bot.send_message(message.chat.id, res.text)
+        else:
+            info_message = ('***\n'
+                            'В тексте не должно быть символов:\n'
+                            '=+/*{}[]()')
+            bot.send_message(chat_id=message.chat.id, text=info_message)
+    except Exception as e:
+        print(f'{date} Исключение внутри функции [text_message] в блоке [APP]\n'
+              f'error: {e}')
+        bot.send_message(chat_id=message.chat.id, text="except")
 
 
+# ****************************
+# START
+# ****************************
 
 if __name__ == '__main__':
     while True:
         try:
             bot.polling(none_stop=True)
         except Exception as e:
-            print(e)
+            print(f'Исключение внутри блока [START]\n'
+                  f'error: {e}')
             sleep(8)
-
