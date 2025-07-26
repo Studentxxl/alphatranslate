@@ -1,0 +1,19 @@
+
+
+curl -X GET -H "Content-Type: application/json" http://127.0.0.1:8000/translate?user_query=love
+
+
+curl -X GET -H "Content-Type: application/json" http://127.0.0.1:8000/translate?user_query=Yandex Translate is a free service that lets you translate text, documents, and images in over 90 languages. You can also use the dictionary with transcription, pronunciation, and examples of usage for words and phrases.
+
+curl -X GET -H "Content-Type: application/json" http://127.0.0.1:8000/translate?user_query="i see you"
+
+
+
+curl http://91.205.164.229:8090/translate?user_query=123
+
+
+curl -H "Content-Type: application/json" -d '{"name":"jack"}' http://91.205.164.229:8090/translate2
+
+
+
+

@@ -1,0 +1,1 @@
+START /MIN C:\PYTHON\Alpha-Translate\.venv\Scripts\python.exe C:\PYTHON\Alpha-Translate\app.py

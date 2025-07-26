@@ -1,0 +1,1 @@
+START /MIN C:\PYTHON\FastTranslate\.venv\Scripts\python.exe C:\PYTHON\FastTranslate\app.py 

@@ -1,0 +1,6 @@
+***
+2025-07-21--22:02 url: http://91.205.164.229:8090/translate?user_query=delete
+response: "удалить"
+***
+2025-07-21--22:02 url: http://91.205.164.229:8090/translate?user_query=hell
+response: "ад"

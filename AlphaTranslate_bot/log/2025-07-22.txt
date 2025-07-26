@@ -1,0 +1,40 @@
+***
+2025-07-22--21:23 url: http://91.205.164.229:8090/translate?user_query=love
+response: "любовь"
+
+***
+2025-07-22--21:23 url: http://91.205.164.229:8090/translate?user_query=.
+response: "Полем"
+
+***
+2025-07-22--21:23 url: http://91.205.164.229:8090/translate?user_query=,
+response: "В"
+
+***
+2025-07-22--21:30 url: http://91.205.164.229:8090/translate?user_query=Google's%20service,%20offered%20free%20of%20charge,%20instantly%20translates%20words,%20phrases,%20and%20web%20pages%20between%20English%20and%20over%20100%20other%20languages.
+response: "Сервис Google, предлагаемый бесплатно, мгновенно переводит слова, фразы и веб -страницы между английским и более чем 100 другими языками."
+
+***
+2025-07-22--21:31 url: http://91.205.164.229:8090/translate?user_query=Yandex%20Translate%20%E2%80%94%20synchronized%20translation%20for%20102%20languages,%20predictive%20typing,%20dictionary%20with%20transcription,%20pronunciation,%20context%20and%20usage%20examples,%20and%20many%20other%20features.
+response: "Yandex Translate - Синхронизированный перевод для 102 языков, прогнозирующее типирование, словарь с транскрипцией, произношение, контекст и примеры использования и многие другие особенности."
+
+***
+2025-07-22--21:32 url: http://91.205.164.229:8090/translate?user_query=Understand%20your%20world%20and%20communicate%20across%20languages%20with%20Google%20Translate.%20Translate%20text,%20speech,%20images,%20documents,%20websites,%20and%20more%20across%20your%20devices.
+response: "Поймите свой мир и общайтесь между языками с помощью Google Translate. Переведите текст, речь, изображения, документы, веб -сайты и многое другое на свои устройства."
+
+***
+2025-07-22--21:32 url: http://91.205.164.229:8090/translate?user_query=500
+response: "500"
+
+***
+2025-07-22--21:33 url: http://91.205.164.229:8090/translate?user_query=use%20strict
+response: "Используйте строго"
+
+***
+2025-07-22--21:33 url: http://91.205.164.229:8090/translate?user_query=strict
+response: "строгий"
+
+***
+2025-07-22--21:33 url: http://91.205.164.229:8090/translate?user_query=the%20strict
+response: "Строгие"
+
