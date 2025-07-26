@@ -1,1 +1,1 @@
-START /MIN C:\PYTHON\FastTranslate\.venv\Scripts\python.exe C:\PYTHON\FastTranslate\app.py 
+START /MIN C:\alphatranslate\AlphaTranslate_server\.venv\Scripts\python.exe C:\alphatranslate\AlphaTranslate_server\app.py

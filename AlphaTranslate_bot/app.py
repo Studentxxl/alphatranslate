@@ -4,9 +4,10 @@ from datetime import datetime
 from time import sleep
 from os import path
 import requests
+import SECRET
 
-TOKEN: str = '7848309765:AAE5tvF-OzZqfVxTcW3Zbk6whDkpQXFDZss'
-bot = telebot.TeleBot(TOKEN)
+
+bot = telebot.TeleBot(SECRET.TOKEN)
 
 
 bot_admin_list = [6753632098]
