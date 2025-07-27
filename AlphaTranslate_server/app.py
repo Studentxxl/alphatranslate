@@ -4,6 +4,7 @@ from mtranslate import translate
 from pydantic import BaseModel
 from langdetect import detect
 import CONFIG
+import SECRET
 
 
 app = FastAPI()
@@ -26,10 +27,13 @@ def read_root():
 @app.get("/translate")
 def ru_eng_translate(user_query):
 
-    to__language = None
-    from__language = None
+    translated_text = 'error905'
 
-    translated_text = translate(user_query, "ru", "auto")
+    if user_query[0] == '!':
+        translated_text = translate(user_query[1:], to_language="ru", from_language="en")
+    if user_query[0] == '?':
+        translated_text = translate(user_query[1:], to_language="en", from_language="ru")
+
     print(user_query, translated_text)
     return JSONResponse(content=translated_text)
 
@@ -45,6 +49,6 @@ def ru_eng_translate2(query: list[Query]):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host=CONFIG.host, port=CONFIG.port)
+    uvicorn.run(app, host=SECRET.host, port=SECRET.port)
 
 

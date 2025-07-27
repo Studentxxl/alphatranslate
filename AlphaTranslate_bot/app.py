@@ -13,18 +13,33 @@ bot = telebot.TeleBot(SECRET.TOKEN)
 # APP
 # ****************************
 
+# обработчик команды /start
+
+# обработчик команды /help
+
+# обработчик текста
 @bot.message_handler(content_types=['text'])
 def text_message(message):
     date = func.date_time_now()
     try:
         if func.check_symbols(obj=message.text, forbidden_symbols=CONFIG.stop_symbols):
             res = requests.get(f'{CONFIG.server_url}/translate/?user_query={message.text}')
-            info_message = (f'***\n'
-                            f'{date} url: {res.url}\n'
-                            f'response: {res.text}\n\n')
-            func.log(file_path=CONFIG.patch_to_log, text=info_message)
-            print(info_message)
-            bot.send_message(message.chat.id, res.text)
+
+            if res.text == '"error905"':
+                err_text = ('Перед английским текстом должен быть знак ! \n'
+                            'Перед русским ?\n\n'
+                            'пример:\n'
+                            '!Hello\n'
+                            '?Привет')
+                bot.send_message(chat_id=message.chat.id, text=err_text)
+
+            else:
+                info_message = (f'***\n'
+                                f'{date} url: {res.url}\n'
+                                f'response: {res.text}\n\n')
+                func.log(file_path=CONFIG.patch_to_log, text=info_message)
+                print(info_message)
+                bot.send_message(message.chat.id, res.text)
         else:
             info_message = ('***\n'
                             'В тексте не должно быть символов:\n'

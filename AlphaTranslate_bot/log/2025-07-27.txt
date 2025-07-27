@@ -1,0 +1,52 @@
+***
+2025-07-27--15:27 url: http://91.205.164.229:8090/translate?user_query=hello
+response: "привет"
+
+***
+2025-07-27--18:52 url: http://91.205.164.229:8090/translate?user_query=.%20%D0%BA%D0%BE%D1%80%D0%BE%D0%BB%D1%8C
+response: "king"
+
+***
+2025-07-27--18:53 url: http://91.205.164.229:8090/translate?user_query=?%20%D0%BA%D0%BE%D1%80%D0%BE%D0%BB%D1%8C
+response: "king"
+
+***
+2025-07-27--18:53 url: http://91.205.164.229:8090/translate?user_query=!%20was
+response: "был"
+
+***
+2025-07-27--18:53 url: http://91.205.164.229:8090/translate?user_query=!%20%D0%B1%D1%8B%D0%BB
+response: "бшл"
+
+***
+2025-07-27--18:54 url: http://91.205.164.229:8090/translate?user_query=!%20origin
+response: "источник"
+
+***
+2025-07-27--19:30 url: http://91.205.164.229:8090/translate?user_query=hi
+response: "Перед английским текстом должен быть знак !\nПеред русским ?\n\nПример:\n!Hello world\n?Привет мир"
+
+***
+2025-07-27--19:31 url: http://91.205.164.229:8090/translate?user_query=y
+response: "Перед английским текстом должен быть знак ! \nПеред русским ? \n\nПример: \n!Hello world \n?Привет мир"
+
+***
+2025-07-27--19:32 url: http://91.205.164.229:8090/translate?user_query=t
+response: "Перед английским текстом должен быть знак !Перед русским ? Пример:!Hello world ?Привет мир"
+
+***
+2025-07-27--19:33 url: http://91.205.164.229:8090/translate?user_query=tt
+response: "Перед английским текстом должен быть знак !\\nПеред русским ? \\nПример:!Hello world ?Привет мир"
+
+***
+2025-07-27--19:36 url: http://91.205.164.229:8090/translate?user_query=t
+response: "error905"
+
+***
+2025-07-27--19:48 url: http://91.205.164.229:8090/translate?user_query=tt
+response: "error905"
+
+***
+2025-07-27--19:48 url: http://91.205.164.229:8090/translate?user_query=tt
+response: "error905"
+
