@@ -25,7 +25,7 @@ def read_root():
 
 
 @app.get("/translate")
-def ru_eng_translate(user_query):
+def ru_eng_translate(user_query: str):
 
     translated_text = 'error905'
 
