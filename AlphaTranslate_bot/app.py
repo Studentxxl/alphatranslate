@@ -1,12 +1,72 @@
 import telebot
-import func
+import TOKEN
+from datetime import datetime
 from time import sleep
 import requests
-import SECRET
-import CONFIG
+from os import path
 
 
-bot = telebot.TeleBot(SECRET.TOKEN)
+bot = telebot.TeleBot(TOKEN.token)
+
+
+# ****************************
+# COMMANDS
+# ****************************
+
+"""
+pip freeze > requirements.txt
+pip install -r requirements.txt
+"""
+
+# ****************************
+# CONFIG
+# ****************************
+
+stop_symbols: list = ['=', '+', '/', '*', '{', '}', '[', ']', '(', ')']
+server_url: str = 'http://91.205.164.229:8090'
+patch_to_log: str = "./log/"
+
+
+# ****************************
+# FUNC
+# ****************************
+
+def check_symbols(obj: str, forbidden_symbols: list[str]):
+    """
+    Проверяет строку на наличие запрещенных символов
+    :param obj: строка
+    :param forbidden_symbols: список строк с запрещенными символами
+    :return: False | True
+    """
+    for i in obj:
+        if i in forbidden_symbols:
+            return False
+    return True
+
+
+def date_time_now() -> str:
+    """
+    :return: Форматированная строка дата, время
+    [гггг-мм-дд--чч-мм]
+    """
+    return datetime.now().strftime("%Y-%m-%d--%H:%M")
+
+
+def log(file_path: str, text: str) -> None:
+    """
+    Пишет логи в файл txt
+    :param file_path: путь к папке логов
+    :param text: текст, который будет записан
+    :return: None
+    """
+    # имя файла [гггг-мм-дд.txt]
+    filename = datetime.now().strftime("%Y-%m-%d" + ".txt")
+    # создает файл с текущей датой, если его не существует
+    if not path.exists(file_path + filename):
+        open(file=file_path + filename, mode='a', encoding='utf-8').close()
+    # пишет текст из переданного параметра
+    with open(file=file_path + filename, mode='a', encoding='utf-8') as file:
+        file.write(text)
 
 
 # ****************************
@@ -30,42 +90,33 @@ def start_command(message):
 @bot.message_handler(content_types=['text'])
 def text_message(message):
     # текущая дата [гггг-мм-дд--чч-мм]
-    date = func.date_time_now()
+    date = date_time_now()
     try:
         # Если прошла проверка на запрещенные символы
-        if func.check_symbols(obj=message.text, forbidden_symbols=CONFIG.stop_symbols):
+        if check_symbols(obj=message.text, forbidden_symbols=stop_symbols):
             # запрос на сервер
-            res = requests.get(f'{CONFIG.server_url}/translate/?user_query={message.text}')
+            res = requests.get(f'{server_url}/translate/?user_query={message.text}')
 
-            # Если есть ответ на запрос
-            if res:
+            # Если сервер вернул ошибку,
+            if res.text == '"error905"':
+                err_text = ('Перед английским текстом должен быть знак ! \n'
+                            'Перед русским ?\n\n'
+                            'пример:\n'
+                            '!Hello\n'
+                            '?Привет')
+                # то в чат отправляется инструкция по выполнению запросов
+                bot.send_message(chat_id=message.chat.id, text=err_text)
 
-                # Если сервер вернул ошибку,
-                if res.text == '"error905"':
-                    err_text = ('Перед английским текстом должен быть знак ! \n'
-                                'Перед русским ?\n\n'
-                                'пример:\n'
-                                '!Hello\n'
-                                '?Привет')
-                    # то в чат отправляется инструкция по выполнению запросов
-                    bot.send_message(chat_id=message.chat.id, text=err_text)
-
-                # Если сервер вернул переведенный текст,
-                else:
-                    info_message = (f'***\n'
-                                    f'{date} url: {res.url}\n'
-                                    f'response: {res.text}\n\n')
-                    # запись события в лог
-                    func.log(file_path=CONFIG.patch_to_log, text=info_message)
-                    print(info_message)
-                    # отправка ответа в чат
-                    bot.send_message(chat_id=message.chat.id, text=res.text)
-
-            #  Если нет ответа от сервера,
+            # Если сервер вернул переведенный текст,
             else:
-                # отправка сообщения об ошибке
-                msg = 'Ошибка сервера. Нет ответа. Попробуй позже'
-                bot.send_message(chat_id=message.chat.id, text=msg)
+                info_message = (f'***\n'
+                                f'{date} url: {res.url}\n'
+                                f'response: {res.text}\n\n')
+                # запись события в лог
+                log(file_path=patch_to_log, text=info_message)
+                print(info_message)
+                # отправка ответа в чат
+                bot.send_message(chat_id=message.chat.id, text=res.text)
 
         # Если не прошла проверка на запрещенные символы
         else:

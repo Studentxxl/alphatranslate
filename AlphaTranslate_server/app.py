@@ -3,12 +3,40 @@ from fastapi.responses import JSONResponse
 from mtranslate import translate
 from pydantic import BaseModel
 from langdetect import detect
-import CONFIG
-import SECRET
 
 
 app = FastAPI()
 
+# ***********************
+# HELP
+# ***********************
+"""
+curl -X GET -H "Content-Type: application/json" http://127.0.0.1:8000/translate?user_query=love
+curl -X GET -H "Content-Type: application/json" http://127.0.0.1:8000/translate?user_query="i see you"
+curl http://91.205.164.229:8090/translate?user_query=123
+curl -H "Content-Type: application/json" -d '{"name":"jack"}' http://91.205.164.229:8090/translate2
+
+py -m venv .venv
+pip freeze > requirements.txt
+pip install -r requirements.txt
+
+response = requests.get('http://127.0.0.1:8000/translate/?user_query=i see you')
+print(response.status_code)
+print(response.json())
+"""
+
+
+# ***********************
+# CONFIG
+# ***********************
+
+host= '0.0.0.0'
+port=8090
+
+
+# ***********************
+# CLASS
+# ***********************
 
 class Query(BaseModel):
     name: str
@@ -49,6 +77,6 @@ def ru_eng_translate2(query: list[Query]):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host=SECRET.host, port=SECRET.port)
+    uvicorn.run(app, host=host, port=port)
 
 
